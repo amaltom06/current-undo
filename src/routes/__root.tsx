@@ -83,10 +83,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Current Undo? — Kerala Power Outage Tracker" },
       { name: "description", content: "Real-time community-powered power outage reports for Kerala." },
       { property: "og:title", content: "Current Undo? — Kerala Power Outage Tracker" },
-      { property: "og:description", content: "Report and track power outages across Kerala in real time." },
+      { property: "og:description", content: "Real-time community-powered power outage reports for Kerala." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Current Undo? — Kerala Power Outage Tracker" },
+      { name: "twitter:description", content: "Real-time community-powered power outage reports for Kerala." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9e89368c-4ad1-4040-b13e-120af2106d79/id-preview-7f41fbbb--8d780300-7127-444a-b0d6-648de457a528.lovable.app-1780138043236.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9e89368c-4ad1-4040-b13e-120af2106d79/id-preview-7f41fbbb--8d780300-7127-444a-b0d6-648de457a528.lovable.app-1780138043236.png" },
     ],
     links: [
       {
