@@ -140,15 +140,15 @@ export const reportRestored = createServerFn({ method: "POST" })
     // Close after 2 restoration reports (or solo if outage was unverified)
     const shouldClose = restored >= 2 || nearby.report_count <= 1;
 
-    const update: Record<string, unknown> = {
-      restored_count: restored,
-      updated_at: new Date().toISOString(),
-    };
-    if (shouldClose) {
-      update.restored_at = new Date().toISOString();
-      update.status = "restored";
-    }
-    await supabaseAdmin.from("outages").update(update).eq("id", nearby.id);
+    const nowIso = new Date().toISOString();
+    await supabaseAdmin
+      .from("outages")
+      .update(
+        shouldClose
+          ? { restored_count: restored, updated_at: nowIso, restored_at: nowIso, status: "restored" }
+          : { restored_count: restored, updated_at: nowIso },
+      )
+      .eq("id", nearby.id);
 
     const durationMs = Date.now() - new Date(nearby.started_at).getTime();
     return { restored: true, closed: shouldClose, durationMs };
