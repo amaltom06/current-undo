@@ -14,7 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      outage_reports: {
+        Row: {
+          created_at: string
+          id: string
+          lat: number
+          lng: number
+          outage_id: string
+          report_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lat: number
+          lng: number
+          outage_id: string
+          report_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lat?: number
+          lng?: number
+          outage_id?: string
+          report_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "outage_reports_outage_id_fkey"
+            columns: ["outage_id"]
+            isOneToOne: false
+            referencedRelation: "outages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      outages: {
+        Row: {
+          area_name: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          kseb_section: string | null
+          lat: number
+          lng: number
+          report_count: number
+          restored_at: string | null
+          restored_count: number
+          started_at: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          area_name?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kseb_section?: string | null
+          lat: number
+          lng: number
+          report_count?: number
+          restored_at?: string | null
+          restored_count?: number
+          started_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          area_name?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kseb_section?: string | null
+          lat?: number
+          lng?: number
+          report_count?: number
+          restored_at?: string | null
+          restored_count?: number
+          started_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          kseb_section: string | null
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+          kseb_section?: string | null
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          kseb_section?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
