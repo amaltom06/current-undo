@@ -11,6 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteHeader } from "../components/SiteHeader";
+import { supabase } from "@/integrations/supabase/client";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -77,11 +80,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Current Undo? — Kerala Power Outage Tracker" },
+      { name: "description", content: "Real-time community-powered power outage reports for Kerala." },
+      { property: "og:title", content: "Current Undo? — Kerala Power Outage Tracker" },
+      { property: "og:description", content: "Report and track power outages across Kerala in real time." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -90,6 +92,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "stylesheet",
+        href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
       },
     ],
   }),
@@ -115,11 +121,22 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange(() => {
+      router.invalidate();
+      queryClient.invalidateQueries();
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [router, queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen bg-background text-foreground">
+        <SiteHeader />
+        <Outlet />
+      </div>
+      <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
 }
